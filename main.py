@@ -31,8 +31,8 @@ bnb_config = BitsAndBytesConfig(
     bnb_4bit_compute_dtype=torch.bfloat16
 )
 
-tokenizer = AutoTokenizer.from_pretrained(model_name, return_tensors="pt")
-model = AutoModelForCausalLM.from_pretrained(model_name, quantization_config=bnb_config, device_map='auto')  #
+tokenizer = AutoTokenizer.from_pretrained(model_name, return_tensors="pt", token=HUGGINGFACE_API_KEY)
+model = AutoModelForCausalLM.from_pretrained(model_name, quantization_config=bnb_config, device_map='auto', token=HUGGINGFACE_API_KEY)
 
 # %%
 
