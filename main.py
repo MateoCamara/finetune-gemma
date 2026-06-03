@@ -1,5 +1,14 @@
+"""Fine-tune google/gemma-2b on a Spanish dataset with QLoRA (4-bit) and TRL's SFTTrainer.
+
+Loads the gated Gemma-2B base in 4-bit (bitsandbytes nf4), attaches a LoRA adapter, trains a
+short run on ``jhonparra18/spanish_billion_words_clean`` and pushes the result to the Hugging
+Face Hub. Requires a CUDA GPU and a Hugging Face token (with Gemma access granted) in a local
+``.env`` file as ``HUGGINGFACE_API_KEY``. The ``# %%`` markers delimit cells for interactive
+(Jupyter/IDE) execution; run end-to-end with ``python main.py``.
+"""
 import os
 
+# Restrict training to GPUs 0 and 1 (set before importing torch). Adjust to your hardware.
 os.environ["CUDA_VISIBLE_DEVICES"] = "0,1"
 
 import torch
@@ -71,8 +80,8 @@ lora_config = LoraConfig(
 # %%
 
 def formatting_func(example):
-    texto = example['text'][0]
-    return [texto]
+    text = example['text'][0]
+    return [text]
 
 
 trainer = SFTTrainer(
